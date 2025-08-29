@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dynamic Continent-Country Dropdown</title>
+</head>
+<body>
+<h2>Dynamic Country Dropdown</h2>
+
+<form>
+  <label for="continent">Select Continent:</label>
+  <select id="continent">
+    <option value="">--Select Continent--</option>
+    <option value="Asia">Asia</option>
+    <option value="Europe">Europe</option>
+    <option value="Africa">Africa</option>
+    <option value="North America">North America</option>
+  </select>
+
+  <br><br>
+  <label for="country">Select Country:</label>
+  <select id="country">
+    <option value="">--Select Country--</option>
+  </select>
+</form>
+
+<script>
+const continentCountryMap = {
+  "Asia": ["India", "China", "Japan", "Thailand"],
+  "Europe": ["Germany", "France", "Italy", "Spain"],
+  "Africa": ["Nigeria", "Egypt", "South Africa", "Kenya"],
+  "North America": ["USA", "Canada", "Mexico"]
+};
+
+const continentSelect = document.getElementById('continent');
+const countrySelect = document.getElementById('country');
+
+continentSelect.addEventListener('change', () => {
+  countrySelect.innerHTML = '<option value="">--Select Country--</option>';
+
+  const selectedContinent = continentSelect.value;
+  if(selectedContinent && continentCountryMap[selectedContinent]) {
+    continentCountryMap[selectedContinent].forEach(country => {
+      const option = document.createElement('option');
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
