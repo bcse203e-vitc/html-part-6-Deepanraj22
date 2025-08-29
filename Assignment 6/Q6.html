@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Username Validation</title>
+</head>
+<body>
+<h2>Username Validation Form</h2>
+
+<form id="usernameForm">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username">
+  </div>
+  <small id="userMsg" style="display:block; margin-top:5px;"></small>
+  <br>
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+const usernameInput = document.getElementById('username');
+const userMsg = document.getElementById('userMsg');
+const usernameForm = document.getElementById('usernameForm');
+
+const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
+
+usernameInput.addEventListener('input', () => {
+  if(usernameRegex.test(usernameInput.value)) {
+    userMsg.textContent = "Valid username";
+    userMsg.style.color = "green";
+  } else {
+    userMsg.textContent = "Invalid username (3-16 chars, letters/numbers/_)";
+    userMsg.style.color = "red";
+  }
+});
+
+usernameForm.addEventListener('submit', (e) => {
+  if(!usernameRegex.test(usernameInput.value)) {
+    e.preventDefault();
+    alert("Please enter a valid username before submitting.");
+  }
+});
+</script>
+
+</body>
+</html>
