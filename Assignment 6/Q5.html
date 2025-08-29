@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Password Match Validation</title>
+</head>
+<body>
+<h2>Password Matching Form</h2>
+
+<form id="passwordForm">
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+  </div>
+  <div>
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" placeholder="Confirm password">
+  </div>
+  <small id="matchMsg" style="display:block; margin-top:5px;"></small>
+</form>
+
+<script>
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirmPassword');
+const matchMsg = document.getElementById('matchMsg');
+
+function checkPasswords() {
+  if(password.value === "" && confirmPassword.value === "") {
+    matchMsg.textContent = "";
+  } else if(password.value === confirmPassword.value) {
+    matchMsg.textContent = "Passwords match";
+    matchMsg.style.color = "green";
+  } else {
+    matchMsg.textContent = "Passwords do not match";
+    matchMsg.style.color = "red";
+  }
+}
+
+password.addEventListener('input', checkPasswords);
+confirmPassword.addEventListener('input', checkPasswords);
+</script>
+
+</body>
+</html>
