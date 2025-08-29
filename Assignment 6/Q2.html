@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Email Field Validation</title>
+</head>
+<body>
+<h2>Email Field Validation</h2>
+
+<form>
+  <label for="email">Email:</label>
+  <input type="text" id="email" placeholder="Enter your email">
+  <div id="message" style="color: red; margin-top: 5px;"></div>
+</form>
+
+<script>
+  const emailInput = document.getElementById('email');
+  const messageDiv = document.getElementById('message');
+
+  const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+  emailInput.onblur = function() {
+    if(emailInput.value.trim() === "") {
+      messageDiv.textContent = "Email is required";
+      messageDiv.style.color = "red";
+    } else if(emailRegex.test(emailInput.value)) {
+      messageDiv.textContent = "Valid email";
+      messageDiv.style.color = "green";
+    } else {
+      messageDiv.textContent = "Invalid email format";
+      messageDiv.style.color = "red";
+    }
+  };
+</script>
+
+</body>
+</html>
