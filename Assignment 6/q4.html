@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dynamic Hobbies Form</title>
+</head>
+<body>
+<h2>Dynamic Hobbies Form</h2>
+
+<form id="hobbyForm">
+  <div id="hobbiesContainer">
+    <div class="hobbyField">
+      <input type="text" class="hobbyInput" placeholder="Enter hobby">
+      <small class="hobbyMsg" style="color:red;"></small>
+    </div>
+  </div>
+  <button type="button" id="addHobbyBtn">Add Hobby</button>
+</form>
+
+<script>
+const hobbiesContainer = document.getElementById('hobbiesContainer');
+const addHobbyBtn = document.getElementById('addHobbyBtn');
+const hobbyRegex = /^[A-Za-z\s]+$/;
+
+function validateHobby(input, msgElement) {
+  if(input.value.trim() === "") {
+    msgElement.textContent = "Hobby is required";
+    msgElement.style.color = "red";
+  } else if(!hobbyRegex.test(input.value)) {
+    msgElement.textContent = "Only alphabets allowed";
+    msgElement.style.color = "red";
+  } else {
+    msgElement.textContent = "Valid hobby";
+    msgElement.style.color = "green";
+  }
+}
+
+document.querySelectorAll('.hobbyInput').forEach(input => {
+  const msg = input.nextElementSibling;
+  input.addEventListener('input', () => validateHobby(input, msg));
+});
+
+addHobbyBtn.addEventListener('click', () => {
+  const div = document.createElement('div');
+  div.className = "hobbyField";
+  div.innerHTML = `
+    <input type="text" class="hobbyInput" placeholder="Enter hobby">
+    <small class="hobbyMsg" style="color:red;"></small>
+  `;
+  hobbiesContainer.appendChild(div);
+
+  const newInput = div.querySelector('.hobbyInput');
+  const newMsg = div.querySelector('.hobbyMsg');
+
+  newInput.addEventListener('input', () => validateHobby(newInput, newMsg));
+});
+</script>
+
+</body>
+</html>
