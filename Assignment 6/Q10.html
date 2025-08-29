@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form Builder</title>
+</head>
+<body>
+  <h2>Dynamic Form Builder</h2>
+
+  <div>
+    <label for="inputType">Select Input Type:</label>
+    <select id="inputType">
+      <option value="text">Text</option>
+      <option value="email">Email</option>
+      <option value="password">Password</option>
+    </select>
+    <button id="addInput">Add</button>
+  </div>
+
+  <form id="dynamicForm">
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const addInputBtn = document.getElementById("addInput");
+    const inputTypeSelect = document.getElementById("inputType");
+    const dynamicForm = document.getElementById("dynamicForm");
+
+    // Regex patterns for validation
+    const patterns = {
+      text: /^[a-zA-Z ]{2,30}$/,
+      email: /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+      password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/
+    };
+
+    // Add input dynamically
+    addInputBtn.addEventListener("click", () => {
+      const type = inputTypeSelect.value;
+
+      const input = document.createElement("input");
+      input.type = type;
+      input.placeholder = `Enter ${type}`;
+      input.name = type + Math.floor(Math.random() * 1000);
+
+      // Live validation
+      input.addEventListener("input", () => {
+        if (patterns[type].test(input.value)) {
+          input.style.border = "2px solid green";
+        } else {
+          input.style.border = "2px solid red";
+        }
+      });
+
+      // Insert above submit button
+      dynamicForm.insertBefore(input, dynamicForm.lastElementChild);
+    });
+
+    // Form submit validation
+    dynamicForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const inputs = dynamicForm.querySelectorAll("input");
+      let valid = true;
+
+      inputs.forEach(input => {
+        const type = input.type;
+        if (!patterns[type].test(input.value)) {
+          valid = false;
+          input.style.border = "2px solid red";
+        }
+      });
+
+      if (valid) {
+        alert("Form submitted successfully!");
+      } else {
+        alert("Please correct the highlighted fields.");
+      }
+    });
+  </script>
+</body>
+</html>
